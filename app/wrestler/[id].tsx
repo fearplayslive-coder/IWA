@@ -7,7 +7,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
 import { theme, typography, spacing, borderRadius, shadows } from '../../constants/theme';
-import { wrestlers } from '../../services/mockData';
+import { wrestlers, WrestlerStatus } from '../../services/mockData';
+
+const getStatusColor = (status: WrestlerStatus) => {
+  switch (status) {
+    case 'Active': return theme.success;
+    case 'Injured': return theme.warning;
+    case 'Suspended': return theme.error;
+  }
+};
 
 const StatBox = ({ 
   label, 
@@ -80,8 +88,14 @@ export default function WrestlerDetailScreen() {
                 <Text style={styles.championText}>CHAMPION</Text>
               </View>
             )}
+            <View style={[styles.statusBadgeLarge, { backgroundColor: getStatusColor(wrestler.status) }]}>
+              <Text style={styles.statusTextLarge}>{wrestler.status.toUpperCase()}</Text>
+            </View>
             <Text style={styles.wrestlerName}>{wrestler.name}</Text>
             <Text style={styles.wrestlerNickname}>"{wrestler.nickname}"</Text>
+            {wrestler.ranking && (
+              <Text style={styles.rankingText}>Ranked #{wrestler.ranking}</Text>
+            )}
           </Animated.View>
         </View>
 
@@ -133,6 +147,22 @@ export default function WrestlerDetailScreen() {
             <Text style={styles.sectionTitle}>BIOGRAPHY</Text>
             <Text style={styles.bioText}>{wrestler.bio}</Text>
           </Animated.View>
+
+          {/* Achievements */}
+          {wrestler.achievements && wrestler.achievements.length > 0 && (
+            <Animated.View 
+              entering={FadeInUp.delay(550).duration(400)}
+              style={styles.achievementsSection}
+            >
+              <Text style={styles.sectionTitle}>ACHIEVEMENTS</Text>
+              {wrestler.achievements.map((achievement, idx) => (
+                <View key={idx} style={styles.achievementItem}>
+                  <MaterialIcons name="military-tech" size={16} color={theme.primary} />
+                  <Text style={styles.achievementText}>{achievement}</Text>
+                </View>
+              ))}
+            </Animated.View>
+          )}
 
           {/* Action Buttons */}
           <Animated.View 
@@ -220,6 +250,23 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: spacing.xs,
   },
+  statusBadgeLarge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.sm,
+    marginBottom: spacing.md,
+  },
+  statusTextLarge: {
+    ...typography.badge,
+    color: theme.textPrimary,
+    fontSize: 12,
+  },
+  rankingText: {
+    ...typography.body,
+    color: theme.textSecondary,
+    marginTop: spacing.xs,
+  },
   content: {
     paddingHorizontal: spacing.lg,
     marginTop: -spacing.xl,
@@ -289,6 +336,22 @@ const styles = StyleSheet.create({
     ...typography.body,
     color: theme.textSecondary,
     lineHeight: 24,
+  },
+  achievementsSection: {
+    marginBottom: spacing.lg,
+  },
+  achievementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.border,
+  },
+  achievementText: {
+    ...typography.body,
+    color: theme.textPrimary,
+    flex: 1,
   },
   actionButtons: {
     gap: spacing.md,

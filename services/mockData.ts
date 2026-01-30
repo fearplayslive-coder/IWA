@@ -1,5 +1,7 @@
 // IWA Mock Data - Wrestlers, Events, News
 
+export type WrestlerStatus = 'Active' | 'Injured' | 'Suspended';
+
 export interface Wrestler {
   id: string;
   name: string;
@@ -15,6 +17,9 @@ export interface Wrestler {
   bio: string;
   wins: number;
   losses: number;
+  status: WrestlerStatus;
+  ranking?: number;
+  achievements: string[];
 }
 
 export interface Event {
@@ -57,6 +62,14 @@ export const wrestlers: Wrestler[] = [
     bio: 'Blaze rose through the independent circuit with a trail of destruction. His explosive power and ruthless aggression have made him the most dominant champion in IWA history.',
     wins: 47,
     losses: 8,
+    status: 'Active',
+    ranking: 1,
+    achievements: [
+      '2024 IWA Heavyweight Champion',
+      'Royal Rumble Winner 2024',
+      'Match of the Year 2023',
+      'Undefeated streak: 23 matches',
+    ],
   },
   {
     id: '2',
@@ -72,6 +85,13 @@ export const wrestlers: Wrestler[] = [
     bio: 'Standing at nearly seven feet tall, Titan is a force of nature. His partnership with Sarrak has made them the most feared tag team in the promotion.',
     wins: 38,
     losses: 12,
+    status: 'Active',
+    ranking: 2,
+    achievements: [
+      '2x Tag Team Champion',
+      'King of the Ring 2023',
+      'Most Dominant Big Man Award',
+    ],
   },
   {
     id: '3',
@@ -87,6 +107,13 @@ export const wrestlers: Wrestler[] = [
     bio: 'Quick, cunning, and absolutely lethal. Viper combines technical prowess with a vicious streak that has left many opponents unable to continue.',
     wins: 42,
     losses: 15,
+    status: 'Suspended',
+    ranking: 5,
+    achievements: [
+      'Tag Team Champion',
+      'Hardcore Championship',
+      'Fastest Submission Record',
+    ],
   },
   {
     id: '4',
@@ -102,6 +129,13 @@ export const wrestlers: Wrestler[] = [
     bio: 'A powerhouse with incredible technical ability. Sarrak and Titan form the devastating duo known as "The Titans of Destruction."',
     wins: 35,
     losses: 14,
+    status: 'Active',
+    ranking: 3,
+    achievements: [
+      '2x Tag Team Champion',
+      'Monster Mayhem Winner',
+      'Power Slam Tournament Champion',
+    ],
   },
   {
     id: '5',
@@ -117,6 +151,13 @@ export const wrestlers: Wrestler[] = [
     bio: 'The youngest competitor on the roster, Gardson has already proven he belongs among the elite. His technical mastery is unmatched.',
     wins: 28,
     losses: 9,
+    status: 'Active',
+    ranking: 6,
+    achievements: [
+      'Rookie of the Year 2023',
+      'Youngest Tag Team Champion',
+      'Rising Star Award',
+    ],
   },
   {
     id: '6',
@@ -132,6 +173,161 @@ export const wrestlers: Wrestler[] = [
     bio: 'After a career-threatening injury, Phoenix returned stronger than ever. His incredible comeback story has made him a fan favorite.',
     wins: 31,
     losses: 11,
+    status: 'Injured',
+    ranking: 4,
+    achievements: [
+      'Comeback of the Year 2024',
+      'Former Intercontinental Champion',
+      'Fan Favorite Award',
+    ],
+  },
+];
+
+// Shows with YouTube videos
+export interface Show {
+  id: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  thumbnail: any;
+  youtubeId: string;
+  duration: string;
+  matches: ShowMatch[];
+}
+
+export interface ShowMatch {
+  id: string;
+  title: string;
+  wrestlers: string[];
+  rating: number;
+  userRatings: number;
+}
+
+export const shows: Show[] = [
+  {
+    id: '1',
+    title: 'INFERNO RISING',
+    subtitle: 'Episode 42',
+    date: 'Oct 20, 2024',
+    thumbnail: require('../assets/images/event-match.jpg'),
+    youtubeId: 'dQw4w9WgXcQ',
+    duration: '2:15:00',
+    matches: [
+      {
+        id: 'm1',
+        title: 'Blaze vs Titan - Heavyweight Championship',
+        wrestlers: ['BLAZE', 'TITAN'],
+        rating: 4.8,
+        userRatings: 1250,
+      },
+      {
+        id: 'm2',
+        title: 'Viper & Gardson vs Sarrak & Phoenix',
+        wrestlers: ['VIPER', 'GARDSON', 'SARRAK', 'PHOENIX'],
+        rating: 4.5,
+        userRatings: 890,
+      },
+    ],
+  },
+  {
+    id: '2',
+    title: 'INFERNO RISING',
+    subtitle: 'Episode 41',
+    date: 'Oct 13, 2024',
+    thumbnail: require('../assets/images/event-match.jpg'),
+    youtubeId: 'dQw4w9WgXcQ',
+    duration: '2:00:00',
+    matches: [
+      {
+        id: 'm3',
+        title: 'Phoenix Returns - Battle Royal',
+        wrestlers: ['PHOENIX', 'VIPER', 'GARDSON', 'SARRAK'],
+        rating: 4.7,
+        userRatings: 1580,
+      },
+    ],
+  },
+];
+
+// Predictions & Polls
+export interface Prediction {
+  id: string;
+  eventId: string;
+  matchTitle: string;
+  wrestler1: string;
+  wrestler2: string;
+  wrestler1Votes: number;
+  wrestler2Votes: number;
+  isOpen: boolean;
+  deadline: string;
+}
+
+export interface Poll {
+  id: string;
+  question: string;
+  options: PollOption[];
+  isOpen: boolean;
+  type: 'match-type' | 'booking' | 'general';
+  deadline: string;
+}
+
+export interface PollOption {
+  id: string;
+  text: string;
+  votes: number;
+}
+
+export const predictions: Prediction[] = [
+  {
+    id: 'p1',
+    eventId: '1',
+    matchTitle: 'Heavyweight Championship',
+    wrestler1: 'BLAZE',
+    wrestler2: 'TITAN',
+    wrestler1Votes: 4250,
+    wrestler2Votes: 3100,
+    isOpen: true,
+    deadline: 'Oct 28, 2024',
+  },
+  {
+    id: 'p2',
+    eventId: '2',
+    matchTitle: 'Tag Team Finals',
+    wrestler1: 'VIPER & GARDSON',
+    wrestler2: 'SARRAK & PHOENIX',
+    wrestler1Votes: 2890,
+    wrestler2Votes: 3450,
+    isOpen: true,
+    deadline: 'Nov 28, 2024',
+  },
+];
+
+export const polls: Poll[] = [
+  {
+    id: 'poll1',
+    question: 'What match type should Blaze vs Titan be?',
+    options: [
+      { id: 'o1', text: 'Steel Cage Match', votes: 3200 },
+      { id: 'o2', text: 'Last Man Standing', votes: 4500 },
+      { id: 'o3', text: 'Ironman Match', votes: 2100 },
+      { id: 'o4', text: 'Hell in a Cell', votes: 5800 },
+    ],
+    isOpen: true,
+    type: 'match-type',
+    deadline: 'Oct 25, 2024',
+  },
+  {
+    id: 'poll2',
+    question: 'Who should Phoenix face in his return match?',
+    options: [
+      { id: 'o1', text: 'Blaze', votes: 2800 },
+      { id: 'o2', text: 'Viper', votes: 1900 },
+      { id: 'o3', text: 'Gardson', votes: 1500 },
+      { id: 'o4', text: 'Sarrak', votes: 2200 },
+    ],
+    isOpen: true,
+    type: 'booking',
+    deadline: 'Nov 15, 2024',
   },
 ];
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { useRouter } from 'expo-router';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -85,6 +86,7 @@ const SettingsSection = ({
 );
 
 export default function ProfileScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const [notifications, setNotifications] = React.useState(true);
   const [darkMode, setDarkMode] = React.useState(true);
@@ -147,8 +149,23 @@ export default function ProfileScreen() {
           />
         </SettingsSection>
 
+        {/* Join IWA */}
+        <SettingsSection title="JOIN IWA" delay={300}>
+          <Pressable 
+            style={styles.joinButton}
+            onPress={() => router.push('/join')}
+          >
+            <MaterialIcons name="sports-kabaddi" size={32} color={theme.primary} />
+            <View style={styles.joinContent}>
+              <Text style={styles.joinTitle}>BECOME A WRESTLER</Text>
+              <Text style={styles.joinSubtitle}>Apply to join the IWA roster</Text>
+            </View>
+            <MaterialIcons name="arrow-forward" size={24} color={theme.primary} />
+          </Pressable>
+        </SettingsSection>
+
         {/* Content */}
-        <SettingsSection title="CONTENT" delay={300}>
+        <SettingsSection title="CONTENT" delay={400}>
           <SettingsItem
             icon="star"
             title="Favorite Wrestlers"
@@ -167,7 +184,7 @@ export default function ProfileScreen() {
         </SettingsSection>
 
         {/* Support */}
-        <SettingsSection title="SUPPORT" delay={400}>
+        <SettingsSection title="SUPPORT" delay={500}>
           <SettingsItem
             icon="help"
             title="Help & FAQ"
@@ -187,7 +204,7 @@ export default function ProfileScreen() {
         </SettingsSection>
 
         {/* Legal */}
-        <SettingsSection title="LEGAL" delay={500}>
+        <SettingsSection title="LEGAL" delay={600}>
           <SettingsItem
             icon="description"
             title="Terms of Service"
@@ -201,7 +218,7 @@ export default function ProfileScreen() {
         </SettingsSection>
 
         {/* Danger Zone */}
-        <SettingsSection title="ACCOUNT" delay={600}>
+        <SettingsSection title="ACCOUNT" delay={700}>
           <SettingsItem
             icon="logout"
             title="Sign Out"
@@ -326,5 +343,27 @@ const styles = StyleSheet.create({
   },
   dangerText: {
     color: theme.error,
+  },
+  joinButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+    padding: spacing.lg,
+    borderRadius: borderRadius.lg,
+    borderWidth: 2,
+    borderColor: theme.primary,
+    gap: spacing.md,
+  },
+  joinContent: {
+    flex: 1,
+  },
+  joinTitle: {
+    ...typography.cardTitle,
+    color: theme.primary,
+    marginBottom: spacing.xs,
+  },
+  joinSubtitle: {
+    ...typography.bodySmall,
+    color: theme.textSecondary,
   },
 });

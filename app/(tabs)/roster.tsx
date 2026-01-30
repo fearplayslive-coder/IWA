@@ -7,7 +7,15 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { theme, typography, spacing, borderRadius } from '../../constants/theme';
-import { wrestlers, Wrestler } from '../../services/mockData';
+import { wrestlers, Wrestler, WrestlerStatus } from '../../services/mockData';
+
+const getStatusColor = (status: WrestlerStatus) => {
+  switch (status) {
+    case 'Active': return theme.success;
+    case 'Injured': return theme.warning;
+    case 'Suspended': return theme.error;
+  }
+};
 
 const WrestlerCard = ({ wrestler, index }: { wrestler: Wrestler; index: number }) => {
   const router = useRouter();
@@ -35,6 +43,14 @@ const WrestlerCard = ({ wrestler, index }: { wrestler: Wrestler; index: number }
               <MaterialIcons name="emoji-events" size={12} color="#FFD700" />
             </View>
           )}
+          {wrestler.ranking && wrestler.ranking <= 3 && (
+            <View style={styles.rankingBadge}>
+              <Text style={styles.rankingText}>#{wrestler.ranking}</Text>
+            </View>
+          )}
+          <View style={[styles.statusBadge, { backgroundColor: getStatusColor(wrestler.status) }]}>
+            <Text style={styles.statusText}>{wrestler.status.toUpperCase()}</Text>
+          </View>
         </View>
         <View style={styles.cardInfo}>
           <Text style={styles.wrestlerName}>{wrestler.name}</Text>
@@ -152,6 +168,33 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.7)',
     padding: spacing.xs,
     borderRadius: borderRadius.full,
+  },
+  rankingBadge: {
+    position: 'absolute',
+    top: spacing.sm,
+    left: spacing.sm,
+    backgroundColor: theme.primary,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm,
+  },
+  rankingText: {
+    ...typography.badge,
+    color: theme.textPrimary,
+    fontWeight: '900',
+  },
+  statusBadge: {
+    position: 'absolute',
+    bottom: spacing.sm,
+    left: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm,
+  },
+  statusText: {
+    ...typography.badge,
+    color: theme.textPrimary,
+    fontSize: 8,
   },
   cardInfo: {
     padding: spacing.md,

@@ -75,11 +75,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="shows"
+        options={{
+          title: 'Shows',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="play-circle" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="predictions"
+        options={{
+          title: 'Vote',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="how-to-vote" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: 'More',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" size={size} color={color} />
+            <MaterialIcons name="menu" size={size} color={color} />
           ),
         }}
       />

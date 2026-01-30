@@ -1,9 +1,10 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { AlertProvider } from '../template';
 
 export default function RootLayout() {
   return (
-    <>
+    <AlertProvider>
       <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
@@ -28,7 +29,14 @@ export default function RootLayout() {
             animation: 'slide_from_right',
           }} 
         />
+        <Stack.Screen 
+          name="join" 
+          options={{ 
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }} 
+        />
       </Stack>
-    </>
+    </AlertProvider>
   );
 }
