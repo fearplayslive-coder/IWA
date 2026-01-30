@@ -1,28 +1,34 @@
 {
   "expo": {
-    "name": "onspace-app",
-    "slug": "onspace-app",
+    "name": "WCPW.com",
+    "slug": "wcpw-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "onspaceapp",
+    "scheme": "wcpwapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+
     "ios": {
+      "bundleIdentifier": "com.wcpw.app",
       "supportsTablet": true
     },
+
     "android": {
+      "package": "com.wcpw.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
     },
+
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/logo.png"
     },
+
     "plugins": [
       "expo-router",
       [
@@ -36,6 +42,7 @@
       ],
       "expo-web-browser"
     ],
+
     "experiments": {
       "typedRoutes": true
     }
